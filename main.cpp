@@ -60,7 +60,7 @@ int main() {
                 std::cout << admin;
 
                 std::string input;
-                int choice;
+                int choice = 1;
 
                 do {
                     bool incorrectInput = true;

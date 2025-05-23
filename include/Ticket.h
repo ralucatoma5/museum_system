@@ -15,9 +15,9 @@ private:
     double totalPrice;
     static double moneySpent;
 
-    double calculateTotalPrice(int nrTickets) {
-        bool groupDiscount = nrTickets >= 7;
-        double price = exhibition->getTicketPrice() * (1 - visitor->getDiscount(groupDiscount)) * nrTickets;
+    double calculateTotalPrice(int ticketCount) {
+        bool groupDiscount = ticketCount >= 7;
+        double price = exhibition->getTicketPrice() * (1 - visitor->getDiscount(groupDiscount)) * ticketCount;
         moneySpent += price;
         return price;
     }
