@@ -34,7 +34,7 @@ void Exhibition::addRating(double rating) {
 double Exhibition::getAverageRating() const {
     if (ratings.empty()) return 0.0;
     double sum = 0;
-    for (auto& r : ratings) sum += r;
+    for (const auto& r : ratings) sum += r;
     return sum / static_cast<double>(ratings.size());
 }
 

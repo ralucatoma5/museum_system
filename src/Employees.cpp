@@ -15,7 +15,7 @@ Employees& Employees::operator=(const Employees& other) {
     return *this;
 }
 
-std::string Employees::getName() const {
+std::string const Employees::getName() const {
     return name;
 }
 

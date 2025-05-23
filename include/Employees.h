@@ -16,7 +16,7 @@ public:
     Employees(const Employees& other);
     Employees& operator=(const Employees& other);
 
-    [[nodiscard]] std::string getName() const;
+    [[nodiscard]] const std::string getName() const;
 
     friend std::ostream& operator<<(std::ostream& os, const Employees& employees);
 

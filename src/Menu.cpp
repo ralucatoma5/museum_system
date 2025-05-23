@@ -251,7 +251,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                     auto vipExhibition = std::dynamic_pointer_cast<VipExhibitionEvent>(exhibitions[i]);
                     if (!vipExhibition)
                         std::cout << i+1 << ". " << *exhibitions[i] << "\n";
-                    else if(vipExhibition && vipVisitor) {
+                    else if(vipVisitor) {
                         std::cout << i+1 << ". ";
                         vipExhibition ->printForYou(std::cout, vipVisitor -> getVipLevel());
                     }
@@ -283,7 +283,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                         std::cout << i+1 << ". " << *freeExhibitions[i] << "\n";
                         exhNr++;
                     }
-                    else if(vipExhibition && vipVisitor) {
+                    else if(vipVisitor) {
                         std::cout << i+1 << ". ";
                         vipExhibition ->printForYou(std::cout, vipVisitor -> getVipLevel());
                         exhNr++;

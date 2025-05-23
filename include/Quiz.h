@@ -10,7 +10,7 @@ private:
     std::vector<Question> questions;
 
 public:
-    Quiz(const std::vector<Question>& questions);
+    explicit Quiz(const std::vector<Question>& questions);
     ~Quiz() = default;
 
     static bool startQuiz();
