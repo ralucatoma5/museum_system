@@ -147,7 +147,7 @@ int main() {
             if (currentVisitor) {
                 std::cout << "Logged in as Visitor\n";
                 std::cout << "Welcome " << currentVisitor->getUsername() << "!\n";
-                int choice;
+                int choice = 1;
                 do {
                     std::string input;
                     bool incorrectInput = true;
