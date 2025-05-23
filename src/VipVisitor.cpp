@@ -7,7 +7,7 @@ VipVisitor::VipVisitor(const std::string& username, const std::string& password,
 VipVisitor::VipVisitor() : Visitor("unknown", "unknown", 0, false, "unknown"), vipLevel("unknown") {}
 
 void VipVisitor::print(std::ostream& os) const {
-    os << "\n==== Account Info ====" << "\n";
+    os << "\n--- Account Info ---" << "\n";
     os << "Username: " << username << "\n";
     os << "Ticket Type: " << ticketType << "\n";
     os << "VIP Level: " << vipLevel << "\n";

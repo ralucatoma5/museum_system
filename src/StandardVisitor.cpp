@@ -9,7 +9,7 @@ StandardVisitor::StandardVisitor(const std::string& username, const std::string&
 StandardVisitor::StandardVisitor() : Visitor("unknown", "unknown", 0, false, "unknown") {}
 
 void StandardVisitor::print(std::ostream& os) const {
-    os << "\n==== Account Info ====" << "\n";
+    os << "\n--- Account Info ---" << "\n";
     os << "Username: " << username << "\n";
     os << "Ticket Type: " << ticketType << "\n";
     os << "Loyalty Points: " << loyaltyPoints << "\n";

@@ -260,6 +260,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
             }
             case 2: {
                 std::cout << "--- Ticket Prices ---\n";
+                std::cout << "You have a " << 1 - currentVisitor->getDiscount(false) << " discount\n";
                 for (size_t i = 0; i < exhibitions.size(); i++) {
                     double price = exhibitions[i]->getTicketPrice() * (1 - currentVisitor->getDiscount(false));
                     std::cout << i+1 << ". " << exhibitions[i]->getName() << " " << exhibitions[i]->getTicketPrice()
@@ -448,10 +449,14 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
             }
 
             case 10: {
-                std::cout << "You need " << 100 - currentVisitor->getLoyaltyPoints() << " more points to become VIP";
+                int pointsNeeded = 100 - currentVisitor->getLoyaltyPoints();
+                if (pointsNeeded > 0)
+                    std::cout << "You need " << pointsNeeded << " more points to become VIP";
+                else
+                    std::cout << "You are VIP, you can buy these tickets!";
                 std::cout << "\n";
-                for (size_t i = 0; i < vipTickets.size(); i++) {
-                    std::cout << *vipTickets[i] << "\n\n";
+                for (const auto & vipTicket : vipTickets) {
+                    std::cout << *vipTicket << "\n\n";
                 }
                 break;
             }
