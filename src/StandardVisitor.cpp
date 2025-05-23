@@ -28,13 +28,17 @@ void StandardVisitor::read(std::istream& is) {
             std::cout << "Enter your ticketType (Adult/Student/Senior): ";
         }
         try {
-            ticketType = readTicketType();
+            std::string ticketType;
+            std::cin >> ticketType;
+            ticketType = Utils::capitalizeWord(ticketType);
+            if (ticketType != "Adult" && ticketType != "Student" && ticketType != "Senior") {
+                throw std::invalid_argument("Invalid ticket type entered.");
+            }
             break;
         } catch (const std::exception&) {
             firstAttempt = false;
         }
     }
-
 
     loyaltyPoints = 0;
     isFirstTimeVisitor = true;

@@ -23,8 +23,7 @@
 #include "../include/Utils.h"
 
 
-
-std::string capitalizeWord(const std::string& word) {
+std::string Utils::capitalizeWord(const std::string& word) {
 
     std::string result = word;
     result[0] = std::toupper(result[0]);
@@ -36,7 +35,7 @@ std::string capitalizeWord(const std::string& word) {
     return result;
 }
 
-void printByType(const std::string& type, const std::vector<std::shared_ptr<Employees>>& employees) {
+void Utils::printByType(const std::string& type, const std::vector<std::shared_ptr<Employees>>& employees) {
     if (!employees.empty()) {
         std::cout << "\n\n" << type << ":\n";
         for (auto i = 0u; i < employees.size(); i++) {
@@ -45,7 +44,7 @@ void printByType(const std::string& type, const std::vector<std::shared_ptr<Empl
     }
 }
 
-void scheduleEachEmployee(const std::vector<std::shared_ptr<Employees>>& employees, std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule, const std::string& day) {
+void Utils::scheduleEachEmployee(const std::vector<std::shared_ptr<Employees>>& employees, std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule, const std::string& day) {
     int empIndex;
     std::cout << "Enter employee index to assign: ";
     std::cin >> empIndex;
@@ -57,7 +56,7 @@ void scheduleEachEmployee(const std::vector<std::shared_ptr<Employees>>& employe
     }
 }
 
-void scheduleAllEmployees(const std::vector<std::shared_ptr<Employees>>& employees, std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule, const std::string& day) {
+void Utils::scheduleAllEmployees(const std::vector<std::shared_ptr<Employees>>& employees, std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule, const std::string& day) {
     std::vector<std::shared_ptr<Employees>> managers;
     std::vector<std::shared_ptr<Employees>> tourGuides;
     std::vector<std::shared_ptr<Employees>> cashiers;
@@ -74,26 +73,16 @@ void scheduleAllEmployees(const std::vector<std::shared_ptr<Employees>>& employe
         }
     }
 
-    printByType("Manager", managers);
-    scheduleEachEmployee(managers, schedule, day);
-    printByType("Tour Guide", tourGuides);
-    scheduleEachEmployee(tourGuides, schedule, day);
-    printByType("Cashier", cashiers);
-    scheduleEachEmployee(cashiers, schedule, day);
+    Utils::printByType("Manager", managers);
+    Utils::scheduleEachEmployee(managers, schedule, day);
+    Utils::printByType("Tour Guide", tourGuides);
+    Utils::scheduleEachEmployee(tourGuides, schedule, day);
+    Utils::printByType("Cashier", cashiers);
+    Utils::scheduleEachEmployee(cashiers, schedule, day);
     std::cout << "Scheduled " << day << "\n";
 }
 
-void printSchedule(const std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule) {
-    for (const auto& [day, employees] : schedule) {
-        std::cout << "Schedule for " << day << ":\n";
-        for (const auto& emp : employees) {
-            std::cout << *emp << "\n";
-        }
-        std::cout << "\n";
-    }
-}
-
-std::shared_ptr<Visitor> upgradeVisitor(std::vector<std::shared_ptr<Visitor>>& visitors, std::shared_ptr<Visitor> visitor) {
+std::shared_ptr<Visitor> Utils::upgradeVisitor(std::vector<std::shared_ptr<Visitor>>& visitors, std::shared_ptr<Visitor> visitor) {
     auto vipVisitor = std::dynamic_pointer_cast<VipVisitor>(visitor);
     if (vipVisitor) {
         if (vipVisitor->getLoyaltyPoints() >= 200  && vipVisitor->getLoyaltyPoints() < 300 && vipVisitor->getVipLevel() == "Silver") {
@@ -132,7 +121,7 @@ std::shared_ptr<Visitor> upgradeVisitor(std::vector<std::shared_ptr<Visitor>>& v
     return visitor;
 }
 
-std::shared_ptr <Visitor> downgradeVisitor(std::vector<std::shared_ptr<Visitor>>& visitors, std::shared_ptr<Visitor> visitor) {
+std::shared_ptr<Visitor> Utils::downgradeVisitor(std::vector<std::shared_ptr<Visitor>>& visitors, std::shared_ptr<Visitor> visitor) {
     auto vipVisitor = std::dynamic_pointer_cast<VipVisitor>(visitor);
     if (vipVisitor) {
         if (vipVisitor->getLoyaltyPoints() < 200 && vipVisitor->getLoyaltyPoints() >= 100 && vipVisitor->getVipLevel() != "Silver") {
@@ -162,7 +151,7 @@ std::shared_ptr <Visitor> downgradeVisitor(std::vector<std::shared_ptr<Visitor>>
     return visitor;
 }
 
-void handleReservation(std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets,
+void Utils::handleReservation(std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets,
                        std::shared_ptr<Visitor>& currentVisitor,
                        std::shared_ptr<Exhibition> selectedExhibition,
                        int nrTickets,
@@ -188,7 +177,7 @@ void handleReservation(std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>
     currentVisitor->changeIsFirstTimeVisitor();
 }
 
-void handleCanceledReservation(std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets,
+void Utils::handleCanceledReservation(std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets,
                        std::shared_ptr<Visitor>& currentVisitor,
                        int reservationIndex,
                        std::vector<std::shared_ptr<Visitor>>& visitors) {
@@ -205,23 +194,5 @@ void handleCanceledReservation(std::vector<std::shared_ptr<Ticket<Visitor, Exhib
     }
 }
 
-void deleteExhibitionByIndex(std::vector<std::shared_ptr<Exhibition>>& exhibitions, int index) {
-    index--;
-    if (index >= 0 && static_cast<std::vector<Exhibition>::size_type>(index) < exhibitions.size()) {
-        exhibitions.erase(exhibitions.begin() + index);
-        std::cout << "Exhibition at index " << index + 1 << " deleted successfully.\n";
-    } else {
-        std::cout << "Invalid index. No exhibition deleted.\n";
-    }
-}
 
-std::string readTicketType() {
-    std::string ticketType;
-    std::cin >> ticketType;
-    ticketType = capitalizeWord(ticketType);
-    if (ticketType != "Adult" && ticketType != "Student" && ticketType != "Senior") {
-        throw std::invalid_argument("Invalid ticket type entered.");
-    }
 
-    return ticketType;
-}

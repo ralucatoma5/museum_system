@@ -152,7 +152,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                 std::string section;
                 std::cout << "Exhibition section (Art/ History/ Science/ Vip): ";
                 std::cin >> section;
-                section = capitalizeWord(section);
+                section = Utils::capitalizeWord(section);
                 std::shared_ptr<ExhibitionFactory> factory = nullptr;
                 if (section == "Art") {
                     factory = std::make_shared<ArtExhibitionFactory>();
@@ -181,7 +181,13 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                 int exhNr;
                 std::cout << "Enter the index of the exhibition you want to delete: ";
                 std::cin >> exhNr;
-                deleteExhibitionByIndex(exhibitions, exhNr);
+                exhNr--;
+                if (exhNr >= 0 && static_cast<std::vector<Exhibition>::size_type>(exhNr) < exhibitions.size()) {
+                    exhibitions.erase(exhibitions.begin() + exhNr);
+                    std::cout << "Exhibition at index " << exhNr + 1 << " deleted successfully.\n";
+                } else {
+                    std::cout << "Invalid index. No exhibition deleted.\n";
+                }
                 break;
             }
             case 4: {
@@ -214,10 +220,10 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                             std::cout << "No such day scheduled.\n";
                         }
                     } else {
-                        scheduleAllEmployees(employees, schedule, day);
+                        Utils::scheduleAllEmployees(employees, schedule, day);
                     }
                 } else {
-                        scheduleAllEmployees(employees, schedule, day);
+                        Utils::scheduleAllEmployees(employees, schedule, day);
                 }
 
                 break;
@@ -227,7 +233,13 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                     std::cout << "There are no scheduled days\n";
                 else {
                     std::cout << "Scheduled days:\n";
-                    printSchedule(schedule);
+                    for (const auto& [day, employees] : schedule) {
+                        std::cout << "Schedule for " << day << ":\n";
+                        for (const auto& emp : employees) {
+                            std::cout << *emp << "\n";
+                        }
+                        std::cout << "\n";
+                    }
                 }
                 break;
             }
@@ -321,7 +333,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                                     std::cout << "You have group discount! \n";
                                 }
                                 selectedExhibition->incrementVisitors(nrTickets);
-                                handleReservation(tickets, currentVisitor, selectedExhibition, nrTickets, visitors);
+                                Utils::handleReservation(tickets, currentVisitor, selectedExhibition, nrTickets, visitors);
                             }
                             else {
                                 int ticketsAvailable = selectedExhibition->getMaxVisitors() - selectedExhibition-> getCurrentVisitors();
@@ -353,7 +365,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                     auto selectedExhibition = tickets[reservationIndex-1]->getExhibition();
                     std::cout <<"\n" <<*selectedExhibition <<"\n";
                     selectedExhibition->decrementVisitors(tickets[reservationIndex-1]->getNrTickets());
-                    handleCanceledReservation(tickets, currentVisitor, reservationIndex, visitors);
+                    Utils::handleCanceledReservation(tickets, currentVisitor, reservationIndex, visitors);
                 }
                 else
                     std::cout << "There are no reservations made \n";

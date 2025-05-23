@@ -11,39 +11,38 @@
 #include "Exhibition.h"
 #include "Ticket.h"
 
-std::string capitalizeWord(const std::string& word);
-std::string readTicketType();
 
-void printByType(const std::string& type, const std::vector<std::shared_ptr<Employees>>& employees);
+class Utils {
+public:
+   static std::string capitalizeWord(const std::string& word);
 
-void scheduleEachEmployee(const std::vector<std::shared_ptr<Employees>>& employees,
-                          std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule,
-                          const std::string& day);
+    static void printByType(const std::string& type, const std::vector<std::shared_ptr<Employees>>& employees);
 
-void scheduleAllEmployees(const std::vector<std::shared_ptr<Employees>>& employees,
-                          std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule,
-                          const std::string& day);
+    static void scheduleEachEmployee(const std::vector<std::shared_ptr<Employees>>& employees,
+                              std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule,
+                              const std::string& day);
 
-void printSchedule(const std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule);
+    static void scheduleAllEmployees(const std::vector<std::shared_ptr<Employees>>& employees,
+                              std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule,
+                              const std::string& day);
 
-void deleteExhibitionByIndex(std::vector<std::shared_ptr<Exhibition>>& exhibitions, int index);
+    static std::shared_ptr<Visitor> upgradeVisitor(std::vector<std::shared_ptr<Visitor>>& visitors,
+                                            std::shared_ptr<Visitor> visitor);
 
-std::shared_ptr<Visitor> upgradeVisitor(std::vector<std::shared_ptr<Visitor>>& visitors,
-                                        std::shared_ptr<Visitor> visitor);
+    static std::shared_ptr<Visitor> downgradeVisitor(std::vector<std::shared_ptr<Visitor>>& visitors,
+                                              std::shared_ptr<Visitor> visitor);
 
-std::shared_ptr<Visitor> downgradeVisitor(std::vector<std::shared_ptr<Visitor>>& visitors,
-                                          std::shared_ptr<Visitor> visitor);
+    static void handleReservation(std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets,
+                           std::shared_ptr<Visitor>& currentVisitor,
+                           std::shared_ptr<Exhibition> selectedExhibition,
+                           int nrTickets,
+                           std::vector<std::shared_ptr<Visitor>>& visitors);
 
-void handleReservation(std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets,
-                       std::shared_ptr<Visitor>& currentVisitor,
-                       std::shared_ptr<Exhibition> selectedExhibition,
-                       int nrTickets,
-                       std::vector<std::shared_ptr<Visitor>>& visitors);
-
-void handleCanceledReservation(std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets,
-                               std::shared_ptr<Visitor>& currentVisitor,
-                               int reservationIndex,
-                               std::vector<std::shared_ptr<Visitor>>& visitors);
+    static void handleCanceledReservation(std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets,
+                                   std::shared_ptr<Visitor>& currentVisitor,
+                                   int reservationIndex,
+                                   std::vector<std::shared_ptr<Visitor>>& visitors);
+};
 
 #endif // UTILS_H
 
