@@ -1,6 +1,6 @@
 #ifndef VIPVISITOR_H
 #define VIPVISITOR_H
-
+#include <memory>
 #include "Visitor.h"
 
 class VipVisitor : public Visitor {

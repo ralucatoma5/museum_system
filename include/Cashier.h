@@ -1,6 +1,6 @@
 #ifndef CASHIER_H
 #define CASHIER_H
-
+#include <memory>
 #include "Employees.h"
 
 class Cashier : public Employees {

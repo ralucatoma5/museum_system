@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-
+#include <memory>
 class Exhibition {
 protected:
     static int allTicketsSold;

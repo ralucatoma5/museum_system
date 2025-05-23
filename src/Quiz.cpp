@@ -1,4 +1,5 @@
 #include "../include/Quiz.h"
+#include <memory>
 
 Quiz::Quiz(const std::vector<Question>& questions) : questions(questions) {}
 

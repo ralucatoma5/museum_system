@@ -1,4 +1,5 @@
 #include "../include/ExhibitionFactory.h"
+#include <memory>
 
 std::shared_ptr<Exhibition> ArtExhibitionFactory::createExhibition() const {
     auto exhibition = std::make_shared<ArtExhibition>();

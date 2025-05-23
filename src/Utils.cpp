@@ -3,6 +3,7 @@
 #include <string>
 #include <cctype>
 #include <map>
+#include <memory>
 #include "../include/Exhibition.h"
 #include "../include/ArtExhibition.h"
 #include "../include/HistoryExhibition.h"

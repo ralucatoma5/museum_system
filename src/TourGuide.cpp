@@ -1,4 +1,5 @@
 #include "../include/TourGuide.h"
+#include <memory>
 
 TourGuide::TourGuide(const std::string& name, int age, int salary, const std::vector<std::string>& languages)
     : Employees(name, age, salary), languages(languages) {}

@@ -1,5 +1,5 @@
 #include "../include/Cashier.h"
-
+#include <memory>
 Cashier::Cashier(const std::string& name, int age, int salary, int registerNumber)
     : Employees(name, age, salary), registerNumber(registerNumber) {}
 

@@ -9,6 +9,7 @@
 #include "../include/Cashier.h"
 #include "../include/StandardVisitor.h"
 #include "../include/VipVisitor.h"
+#include <memory>
 Menu::Menu() {}
 
 Menu& Menu::getMenu() {

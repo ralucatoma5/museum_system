@@ -1,6 +1,6 @@
 #ifndef VISITOR_H
 #define VISITOR_H
-
+#include <memory>
 #include "User.h"
 
 class Visitor : public User {

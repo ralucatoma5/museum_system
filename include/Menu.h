@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <map>
-
+#include <memory>
 #include "Exhibition.h"
 #include "Employees.h"
 #include "Visitor.h"

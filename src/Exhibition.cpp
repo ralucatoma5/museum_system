@@ -1,5 +1,6 @@
 #include "../include/Exhibition.h"
 #include <iostream>
+#include <memory>
 
 int Exhibition::allTicketsSold = 0;
 

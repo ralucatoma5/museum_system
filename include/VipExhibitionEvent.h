@@ -1,6 +1,6 @@
 #ifndef VIPEXHIBITIONEVENT_H
 #define VIPEXHIBITIONEVENT_H
-
+#include <memory>
 #include "Exhibition.h"
 #include <map>
 

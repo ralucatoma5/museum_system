@@ -1,6 +1,6 @@
 #ifndef MANAGER_H
 #define MANAGER_H
-
+#include <memory>
 #include "Employees.h"
 
 class Manager : public Employees {
