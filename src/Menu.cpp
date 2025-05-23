@@ -142,7 +142,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
         switch (choice) {
             case 1: {
                 std::cout << "--- Exhibitions ---\n";
-                for (int i = 0; i < exhibitions.size(); i++) {
+                for (size_t i = 0; i < exhibitions.size(); i++) {
                     std::cout << i+1 << ". " << *exhibitions[i] << "\n";
                 }
                 break;
@@ -174,7 +174,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
             }
             case 3: {
                 std::cout << "--- Exhibitions ---\n";
-                for (int i = 0; i < exhibitions.size(); i++) {
+                for (size_t i = 0; i < exhibitions.size(); i++) {
                     std::cout << i+1 << ". " << *exhibitions[i] << "\n";
                 }
                 int exhNr;
@@ -246,7 +246,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
             case 1: {
                 std::cout << "--- Exhibitions ---\n";
                 auto vipVisitor = std::dynamic_pointer_cast<VipVisitor>(currentVisitor);
-                for (int i = 0; i < exhibitions.size(); i++) {
+                for (size_t i = 0; i < exhibitions.size(); i++) {
                     auto vipExhibition = std::dynamic_pointer_cast<VipExhibitionEvent>(exhibitions[i]);
                     if (!vipExhibition)
                         std::cout << i+1 << ". " << *exhibitions[i] << "\n";
@@ -259,7 +259,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
             }
             case 2: {
                 std::cout << "--- Ticket Prices ---\n";
-                for (int i = 0; i < exhibitions.size(); i++) {
+                for (size_t i = 0; i < exhibitions.size(); i++) {
                     double price = exhibitions[i]->getTicketPrice() * (1 - currentVisitor->getDiscount(false));
                     std::cout << i+1 << ". " << exhibitions[i]->getName() << " " << exhibitions[i]->getTicketPrice()
                           << " lei (Your price: " << price << " lei)\n";
@@ -270,13 +270,13 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                 std::cout << "--- Available Exhibitions ---n";
                 auto vipVisitor = std::dynamic_pointer_cast<VipVisitor>(currentVisitor);
                 std::vector<std::shared_ptr<Exhibition>> freeExhibitions;
-                for (int i = 0; i < exhibitions.size(); i++) {
+                for (size_t i = 0; i < exhibitions.size(); i++) {
                     if (!exhibitions[i]->isFull()) {
                         freeExhibitions.push_back(exhibitions[i]);
                     }
                 }
                 int exhNr = 0;
-                for (int i = 0; i < freeExhibitions.size(); i++) {
+                for (size_t i = 0; i < freeExhibitions.size(); i++) {
                     auto vipExhibition = std::dynamic_pointer_cast<VipExhibitionEvent>(freeExhibitions[i]);
                     if (!vipExhibition) {
                         std::cout << i+1 << ". " << *freeExhibitions[i] << "\n";
@@ -339,7 +339,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                 if (!tickets.empty()) {
                     int reservationIndex;
 
-                    for (int i = 0; i < tickets.size(); i++) {
+                    for (size_t i = 0; i < tickets.size(); i++) {
                         std::cout << i + 1 << ". " << *tickets[i];
                     }
                     std::cout << "Pick the number of the reservation that you want to cancel: ";
@@ -416,7 +416,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                     }
                 }
 
-                for (int i = 0; i < toRateTickets.size(); i++) {
+                for (size_t i = 0; i < toRateTickets.size(); i++) {
                     std::string exhibitionName = (toRateTickets[i]->getExhibition()) -> getName();
                     std::cout << i+1 << ". " << exhibitionName << "\n";
                 }
@@ -450,7 +450,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
             case 10: {
                 std::cout << "You need " << 100 - currentVisitor->getLoyaltyPoints() << " more points to become VIP";
                 std::cout << "\n";
-                for (int i = 0; i < vipTickets.size(); i++) {
+                for (size_t i = 0; i < vipTickets.size(); i++) {
                     std::cout << *vipTickets[i] << "\n\n";
                 }
                 break;

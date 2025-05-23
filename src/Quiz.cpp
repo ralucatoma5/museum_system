@@ -28,9 +28,9 @@ bool Quiz::startQuiz() {
 
 bool Quiz::winQuiz() {
     int score = 0;
-    for (int i = 0; i < questions.size(); i++) {
+    for (size_t i = 0; i < questions.size(); i++) {
         std::cout << "Q" << (i+1) << ": " << questions[i].getQuestion() << "\n";
-        for (int j = 0; j < questions[i].getAnswers().size(); j++) {
+        for (size_t j = 0; j < questions[i].getAnswers().size(); j++) {
             std::cout << "  " << (j+1) << ". " << questions[i].getAnswers()[j] << "\n";
         }
         std::cout << "Your answer number: ";
