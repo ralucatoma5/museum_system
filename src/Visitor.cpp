@@ -12,8 +12,7 @@ void Visitor::removeLoyaltyPoints(int points) {
 }
 
 void Visitor::changeIsFirstTimeVisitor() {
-    if (isFirstTimeVisitor)
-        isFirstTimeVisitor = false;
+    isFirstTimeVisitor = false;
 }
 
 int Visitor::getLoyaltyPoints() {

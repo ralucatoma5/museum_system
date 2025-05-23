@@ -39,7 +39,7 @@ public:
         std::shared_ptr<Visitor>& currentVisitor,
         std::vector<std::shared_ptr<Visitor>>& visitors,
         std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets,
-        std::vector<std::shared_ptr<Ticket<VipVisitor, VipExhibitionEvent>>> vipTickets
+        const std::vector<std::shared_ptr<Ticket<VipVisitor, VipExhibitionEvent>>>& vipTickets
     );
 
     void seedData(

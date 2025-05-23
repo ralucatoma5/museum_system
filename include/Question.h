@@ -12,8 +12,8 @@ private:
 
 public:
     Question(const std::string& question, const std::vector<std::string>& answers, int correctAnswer);
-    std::string getQuestion() const;
-    std::vector<std::string> getAnswers() const;
+    const std::string& getQuestion() const;
+    const std::vector<std::string>& getAnswers() const;
     int getCorrectAnswerIndex() const;
 
     ~Question() = default;

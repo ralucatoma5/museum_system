@@ -240,7 +240,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
         }
     }
 
-    void Menu::handleVisitorChoice(int choice, std::vector<std::shared_ptr<Exhibition>>& exhibitions,  std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& ratedTickets, bool& gamePlayed, std::shared_ptr<Visitor>& currentVisitor, std::vector<std::shared_ptr<Visitor>>& visitors, std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets, std::vector<std::shared_ptr<Ticket<VipVisitor, VipExhibitionEvent>>> vipTickets){
+    void Menu::handleVisitorChoice(int choice, std::vector<std::shared_ptr<Exhibition>>& exhibitions,  std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& ratedTickets, bool& gamePlayed, std::shared_ptr<Visitor>& currentVisitor, std::vector<std::shared_ptr<Visitor>>& visitors, std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets, const std::vector<std::shared_ptr<Ticket<VipVisitor, VipExhibitionEvent>>>& vipTickets){
 
 
         switch (choice) {
@@ -296,7 +296,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                 std::string response;
                 std::cout << "Select exhibition (enter number): ";
                 std::cin >> exhChoice;
-                if (exhChoice > exhNr || exhChoice < 0) {
+                if (exhChoice > exhNr || exhChoice <= 0) {
                     std::cout << "Invalid exhibition choice";
                     break;
                 }
@@ -424,11 +424,11 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
 
                 if (!toRateTickets.empty()) {
                     int index;
-                    double rating;
                     std::cout << "Choose the index of the exhibition that you want to rate: ";
                     std::cin >> index;
                     index--;
                     if (index >= 0 && index < static_cast<int>(toRateTickets.size())) {
+                        double rating;
                         std::cout << "Rate it from 1 to 5: ";
                         std::cin >> rating;
                         (toRateTickets[index] ->getExhibition()) -> addRating(rating);

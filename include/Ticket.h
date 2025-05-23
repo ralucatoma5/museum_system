@@ -73,7 +73,4 @@ public:
     }
 };
 
-extern template class Ticket<Visitor, Exhibition>;
-extern template class Ticket<VipVisitor, VipExhibitionEvent>;
-
 #endif //TICKET_H
