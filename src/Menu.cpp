@@ -233,9 +233,9 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                     std::cout << "There are no scheduled days\n";
                 else {
                     std::cout << "Scheduled days:\n";
-                    for (const auto& [day, employees] : schedule) {
+                    for (const auto& [day, dayEmployees] : schedule) {
                         std::cout << "Schedule for " << day << ":\n";
-                        for (const auto& emp : employees) {
+                        for (const auto& emp :dayEmployees) {
                             std::cout << *emp << "\n";
                         }
                         std::cout << "\n";

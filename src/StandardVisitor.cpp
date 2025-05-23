@@ -28,12 +28,13 @@ void StandardVisitor::read(std::istream& is) {
             std::cout << "Enter your ticketType (Adult/Student/Senior): ";
         }
         try {
-            std::string ticketType;
-            std::cin >> ticketType;
-            ticketType = Utils::capitalizeWord(ticketType);
-            if (ticketType != "Adult" && ticketType != "Student" && ticketType != "Senior") {
+            std::string inputTicketType;
+            std::cin >> inputTicketType;
+            inputTicketType = Utils::capitalizeWord(inputTicketType);
+            if (inputTicketType != "Adult" && inputTicketType != "Student" && inputTicketType != "Senior") {
                 throw std::invalid_argument("Invalid ticket type entered.");
             }
+            ticketType = inputTicketType;
             break;
         } catch (const std::exception&) {
             firstAttempt = false;
