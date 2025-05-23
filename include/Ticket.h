@@ -32,10 +32,6 @@ public:
         totalPrice += calculateTotalPrice(additionalTickets);
     }
 
-    [[nodiscard]] double getTotalPrice() const {
-        return totalPrice;
-    }
-
     [[nodiscard]] int getNrTickets() const {
         return nrTickets;
     }
