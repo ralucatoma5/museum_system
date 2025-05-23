@@ -304,7 +304,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                 std::cout << "Do you want to make a reservation? (yes/no): ";
                 std::cin >> response;
                 if (response == "yes") {
-                    if (exhChoice > 0 && exhChoice < freeExhibitions.size()) {
+                    if (exhChoice > 0 && exhChoice < static_cast<int>(freeExhibitions.size())) {
                         auto selectedExhibition = freeExhibitions[exhChoice - 1];
                         if (!selectedExhibition->isFull()) {
                             int nrTickets;
@@ -344,7 +344,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                     }
                     std::cout << "Pick the number of the reservation that you want to cancel: ";
                     std::cin >> reservationIndex;
-                    if (reservationIndex > tickets.size()) {
+                    if (reservationIndex > static_cast<int>(tickets.size())) {
                         std::cout << "Invalid index";
                         break;
                     }
@@ -427,7 +427,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                     std::cout << "Choose the index of the exhibition that you want to rate: ";
                     std::cin >> index;
                     index--;
-                    if (index >= 0 && index < toRateTickets.size()) {
+                    if (index >= 0 && index < static_cast<int>(toRateTickets.size())) {
                         std::cout << "Rate it from 1 to 5: ";
                         std::cin >> rating;
                         (toRateTickets[index] ->getExhibition()) -> addRating(rating);

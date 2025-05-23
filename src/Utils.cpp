@@ -21,22 +21,24 @@
 #include "../include/Menu.h"
 #include "../include/Utils.h"
 
+
+
 std::string capitalizeWord(const std::string& word) {
+
     std::string result = word;
     result[0] = std::toupper(result[0]);
 
-    for (int i = 1; i < result.length(); i++) {
+    for (auto i = 1u; i < result.size(); i++) {
         result[i] = std::tolower(result[i]);
     }
 
     return result;
 }
 
-
 void printByType(const std::string& type, const std::vector<std::shared_ptr<Employees>>& employees) {
     if (!employees.empty()) {
-        std::cout <<"\n\n" << type << ":\n";
-        for (int i = 0; i < employees.size(); i++) {
+        std::cout << "\n\n" << type << ":\n";
+        for (auto i = 0u; i < employees.size(); i++) {
             std::cout << i + 1 << ". " << *employees[i] << "\n";
         }
     }
@@ -47,7 +49,7 @@ void scheduleEachEmployee(const std::vector<std::shared_ptr<Employees>>& employe
     std::cout << "Enter employee index to assign: ";
     std::cin >> empIndex;
     empIndex--;
-    if (empIndex >= 0 && empIndex < employees.size()) {
+    if (empIndex >= 0 && static_cast<size_t>(empIndex) < employees.size()) {
         schedule[day].push_back(employees[empIndex]);
     } else {
         std::cout << "Invalid index.\n";
@@ -192,7 +194,7 @@ void handleCanceledReservation(std::vector<std::shared_ptr<Ticket<Visitor, Exhib
 
     int nrTickets = tickets[reservationIndex-1] -> getNrTickets();
     Ticket<Visitor, Exhibition>::refundMoney(tickets[reservationIndex-1]->getTotalPrice());
-    if (reservationIndex > 0 && reservationIndex <= tickets.size()) {
+    if (reservationIndex > 0 && reservationIndex <= static_cast<int>(tickets.size())) {
         tickets.erase(tickets.begin() + reservationIndex - 1);
         std::cout << "Reservation has been canceled\n";
         currentVisitor->removeLoyaltyPoints(nrTickets * 10);
@@ -204,7 +206,7 @@ void handleCanceledReservation(std::vector<std::shared_ptr<Ticket<Visitor, Exhib
 
 void deleteExhibitionByIndex(std::vector<std::shared_ptr<Exhibition>>& exhibitions, int index) {
     index--;
-    if (index < exhibitions.size()) {
+    if (index >= 0 && static_cast<std::vector<Exhibition>::size_type>(index) < exhibitions.size()) {
         exhibitions.erase(exhibitions.begin() + index);
         std::cout << "Exhibition at index " << index + 1 << " deleted successfully.\n";
     } else {

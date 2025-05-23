@@ -71,16 +71,14 @@ int main() {
                             if (!std::isdigit(ch))
                                 correctInput = false;
                         }
-                        if (choice < 0 || choice > 5)
-                            correctInput = false;
+
                         if(!correctInput)
                             std::cout << "\nChoose a valid number from the list!\n";
                         else
                             choice = std::stoi(input);
 
-                        if (!(choice >= 0 && choice <= 5))
+                        if (choice < 0 || choice > 5)
                             correctInput = false;
-
 
                         if (correctInput) {
                             incorrectInput = false;

@@ -20,7 +20,7 @@ std::shared_ptr<Employees> TourGuide::clone() const {
 
 void TourGuide::print(std::ostream& os) const {
     os << "Tour Guid " << name << " who knows ";
-    for (int i = 0; i < languages.size()-1; i++) {
+    for (std::size_t i = 0; i < languages.size()-1; i++) {
         os << languages[i] << ", ";
     }
     os << languages[languages.size()-1] << " - " << age << " years old with salary " << salary << "\n";
