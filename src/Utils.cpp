@@ -194,7 +194,7 @@ void handleCanceledReservation(std::vector<std::shared_ptr<Ticket<Visitor, Exhib
                        std::vector<std::shared_ptr<Visitor>>& visitors) {
 
     int nrTickets = tickets[reservationIndex-1] -> getNrTickets();
-    Ticket<Visitor, Exhibition>::refundMoney(tickets[reservationIndex-1]->getTotalPrice());
+
     if (reservationIndex > 0 && reservationIndex <= static_cast<int>(tickets.size())) {
         tickets.erase(tickets.begin() + reservationIndex - 1);
         std::cout << "Reservation has been canceled\n";

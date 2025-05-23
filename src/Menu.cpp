@@ -305,7 +305,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                 std::cout << "Do you want to make a reservation? (yes/no): ";
                 std::cin >> response;
                 if (response == "yes") {
-                    if (exhChoice > 0 && exhChoice < static_cast<int>(freeExhibitions.size())) {
+                    if (exhChoice < static_cast<int>(freeExhibitions.size())) {
                         auto selectedExhibition = freeExhibitions[exhChoice - 1];
                         if (!selectedExhibition->isFull()) {
                             int nrTickets;
@@ -371,7 +371,6 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
             case 6: {
                 std::cout<<*currentVisitor;
                 std::cout<<"You bought " << Exhibition::getAllTicketsSold() << " tickets \n";
-                std::cout<<"You have spent " << Ticket<Visitor, Exhibition>::getMoneySpent() << " lei"<<"\n";
                 break;
             }
 

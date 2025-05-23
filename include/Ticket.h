@@ -13,12 +13,10 @@ private:
     std::shared_ptr<E> exhibition;
     int nrTickets;
     double totalPrice;
-    static double moneySpent;
 
     double calculateTotalPrice(int ticketCount) {
         bool groupDiscount = ticketCount >= 7;
         double price = exhibition->getTicketPrice() * (1 - visitor->getDiscount(groupDiscount)) * ticketCount;
-        moneySpent += price;
         return price;
     }
 
@@ -42,13 +40,6 @@ public:
         return nrTickets;
     }
 
-    static double getMoneySpent() {
-        return moneySpent;
-    }
-
-    static void refundMoney(double ticketsPrice) {
-        moneySpent -= ticketsPrice;
-    }
 
     const std::shared_ptr<E>& getExhibition() const {
         return exhibition;
