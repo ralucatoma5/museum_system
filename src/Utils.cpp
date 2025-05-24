@@ -82,6 +82,7 @@ void Utils::scheduleAllEmployees(const std::vector<std::shared_ptr<Employees>>& 
     std::cout << "Scheduled " << day << "\n";
 }
 
+
 std::shared_ptr<Visitor> Utils::upgradeVisitor(std::vector<std::shared_ptr<Visitor>>& visitors, std::shared_ptr<Visitor> visitor) {
     auto vipVisitor = std::dynamic_pointer_cast<VipVisitor>(visitor);
     if (vipVisitor) {

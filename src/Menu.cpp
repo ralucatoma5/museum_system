@@ -121,7 +121,7 @@ void Menu::showAdminMenu() {
     std::cout << "3. Remove Exhibition\n";
     std::cout << "4. Schedule day\n";
     std::cout << "5. See scheduled days\n";
-    std::cout << "0. Exit\n";
+    std::cout << "0. Logout\n";
     std::cout << "Enter choice: ";
 }
 
@@ -137,7 +137,7 @@ void Menu::showVisitorMenu() {
     std::cout << "8. Rate the exhibits you had tickets to\n";
     std::cout << "9. See exhibitions reviews\n";
     std::cout << "10. See the tickets you can buy with Vip Level\n";
-    std::cout << "0. Exit\n";
+    std::cout << "0. Logout\n";
     std::cout << "Enter choice: ";
 }
 
@@ -409,7 +409,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                             currentVisitor->addLoyaltyPoints(50);
                     }
                 } else {
-                    std::cout << "You have already took this quiz!";
+                    std::cout << "You have already taken this quiz!";
                 }
                 break;
             }
@@ -510,7 +510,7 @@ void Menu::loginUser(const Admin& admin, std::vector<std::shared_ptr<Exhibition>
                 std::cout << admin;
 
                 std::string input;
-                int choice = 1;
+                int choice = -1;
 
                 do {
                     bool incorrectInput = true;
@@ -597,7 +597,7 @@ void Menu::loginUser(const Admin& admin, std::vector<std::shared_ptr<Exhibition>
             if (currentVisitor) {
                 std::cout << "Logged in as Visitor\n";
                 std::cout << "Welcome " << currentVisitor->getUsername() << "!\n";
-                int choice = 1;
+                int choice = -1;
                 do {
                     std::string input;
                     bool incorrectInput = true;
@@ -625,8 +625,6 @@ void Menu::loginUser(const Admin& admin, std::vector<std::shared_ptr<Exhibition>
                     }
                 } while (choice!=0);
                 validInput = true;
-            } else {
-                std::cout << "Invalid credentials or account not found!\n";
             }
         }
 

@@ -32,10 +32,18 @@ int main() {
     std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>> tickets;
     std::vector<std::shared_ptr<Ticket<VipVisitor, VipExhibitionEvent>>> vipTickets;
     menu.seedData(exhibitions, visitors, employees, vipTickets);
-    bool gamePlayed = false;
-    std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>> ratedTickets;
-    std::map<std::string, std::vector<std::shared_ptr<Employees>>> schedule;
-    menu.loginUser(admin, exhibitions, employees, schedule, visitors, tickets, vipTickets, menu, gamePlayed, ratedTickets);
-
+    bool exitApp = false;
+    while (!exitApp) {
+        bool gamePlayed = false;
+        std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>> ratedTickets;
+        std::map<std::string, std::vector<std::shared_ptr<Employees>>> schedule;
+        menu.loginUser(admin, exhibitions, employees, schedule, visitors, tickets, vipTickets, menu, gamePlayed, ratedTickets);
+        std::string response;
+        std::cout << "Do you want to login again or exit the program? (login/exit): ";
+        std::cin >> response;
+        if (response == "exit") {
+            exitApp = true;
+        }
+    }
     return 0;
 }
