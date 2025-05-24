@@ -10,6 +10,7 @@
 #include "Ticket.h"
 #include "VipVisitor.h"
 #include "VipExhibitionEvent.h"
+#include "Admin.h"
 
 
 class Menu {
@@ -47,6 +48,21 @@ public:
         std::vector<std::shared_ptr<Visitor>>& visitors,
         std::vector<std::shared_ptr<Employees>>& employees,
         std::vector<std::shared_ptr<Ticket<VipVisitor, VipExhibitionEvent>>>& vipTickets);
+
+    void loginUser(
+        Admin admin,
+        std::vector<std::shared_ptr<Exhibition>>& exhibitions,
+        std::vector<std::shared_ptr<Employees>>& employees,
+        std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule,
+        std::vector<std::shared_ptr<Visitor>>& visitors,
+        std::vector<std::shared_ptr<Ticket<Visitor,
+        Exhibition>>>& tickets,
+        const std::vector<std::shared_ptr<Ticket<VipVisitor,
+        VipExhibitionEvent>>>& vipTickets,
+        Menu& menu,
+        bool& gamePlayed,
+        std::vector<std::shared_ptr<Ticket<Visitor,
+        Exhibition>>> ratedTickets);
 };
 
 
