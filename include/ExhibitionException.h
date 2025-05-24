@@ -7,7 +7,7 @@
 class ExhibitionException : public std::exception {
     std::string message;
 public:
-    ExhibitionException(const std::string& msg = "Exhibition error") : message(msg) {}
+    explicit ExhibitionException(const std::string& msg = "Exhibition error") : message(msg) {}
 
     const char* what() const noexcept override {
         return message.c_str();
@@ -27,7 +27,7 @@ public:
 class NotEnoughTicketsException : public ExhibitionException {
     int available;
 public:
-    NotEnoughTicketsException(int available)
+    explicit NotEnoughTicketsException(int available)
         : ExhibitionException("Not enough tickets available"), available(available) {}
 
     int getAvailable() const { return available; }
