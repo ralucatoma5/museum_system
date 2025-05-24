@@ -61,8 +61,7 @@ public:
         VipExhibitionEvent>>>& vipTickets,
         Menu& menu,
         bool& gamePlayed,
-        std::vector<std::shared_ptr<Ticket<Visitor,
-        Exhibition>>> ratedTickets);
+        const std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& ratedTickets);
 
     bool isValid(const std::string& input);
 
