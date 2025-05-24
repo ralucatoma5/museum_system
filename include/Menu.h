@@ -63,7 +63,26 @@ public:
         bool& gamePlayed,
         std::vector<std::shared_ptr<Ticket<Visitor,
         Exhibition>>> ratedTickets);
+
+    bool isValid(const std::string& input);
+
+    int getValidatedChoice(int min, int max);
+    void runVisitor(std::shared_ptr<Visitor> currentVisitor,
+                Menu& menu,
+                std::vector<std::shared_ptr<Visitor>>& visitors,
+                std::vector<std::shared_ptr<Exhibition>>& exhibitions,
+                std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets,
+                std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>> ratedTickets,
+                const std::vector<std::shared_ptr<Ticket<VipVisitor, VipExhibitionEvent>>>& vipTickets,
+                bool& gamePlayed);
+    void runAdmin(const Admin& admin, Menu& menu,
+        std::vector<std::shared_ptr<Exhibition>>& exhibitions,
+              const std::vector<std::shared_ptr<Employees>>& employees,
+              std::map<std::string,
+              std::vector<std::shared_ptr<Employees>>>& schedule);
 };
+
+
 
 
 #endif //MENU_H
