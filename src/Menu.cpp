@@ -492,7 +492,7 @@ bool Menu::isValid(const std::string& input) {
 
 int Menu::getValidatedChoice(int min, int max) {
     std::string input;
-    int choice = -1;
+    int choice;
 
     while (true) {
         std::cin >> input;
