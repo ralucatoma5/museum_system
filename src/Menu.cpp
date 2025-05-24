@@ -338,7 +338,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
 
                         int available = selectedExhibition->getMaxVisitors() - selectedExhibition->getCurrentVisitors();
                         if (nrTickets > available) {
-                            throw NotEnoughTicketsException(available);
+                            throw NotEnoughTicketsException();
                         }
 
                         if (currentVisitor->getIsFirstTimeVisitor()) {
@@ -354,7 +354,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                 }
 
                 catch (const ExhibitionException& ex) {
-                    std::cout << "Error: " << ex.what() << "\n";
+                    std::cout << ex.what() << "\n";
                 }
 
                 break;

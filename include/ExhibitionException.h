@@ -25,12 +25,9 @@ public:
 };
 
 class NotEnoughTicketsException : public ExhibitionException {
-    int available;
 public:
-    explicit NotEnoughTicketsException(int available)
-        : ExhibitionException("Not enough tickets available"), available(available) {}
+    NotEnoughTicketsException(): ExhibitionException("Not enough tickets available.") {}
 
-    int getAvailable() const { return available; }
 };
 
 #endif // EXHIBITIONEXCEPTION_H
