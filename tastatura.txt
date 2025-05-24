@@ -1,7 +1,4 @@
 yes
-adm
-admin123
-yes
 admin
 admin123
 2
@@ -26,11 +23,6 @@ monday
 5
 0
 login
-no
-no
-user
-pass
-adult
 no
 no
 raluca_toma
