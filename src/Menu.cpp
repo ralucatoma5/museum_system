@@ -486,7 +486,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
 
     }
 
-void Menu::loginUser(Admin admin, std::vector<std::shared_ptr<Exhibition>>& exhibitions, std::vector<std::shared_ptr<Employees>>& employees, std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule, std::vector<std::shared_ptr<Visitor>>& visitors, std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets, const std::vector<std::shared_ptr<Ticket<VipVisitor, VipExhibitionEvent>>>& vipTickets, Menu& menu, bool& gamePlayed, std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>> ratedTickets) {
+void Menu::loginUser(const Admin& admin, std::vector<std::shared_ptr<Exhibition>>& exhibitions, const std::vector<std::shared_ptr<Employees>>& employees, std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule, std::vector<std::shared_ptr<Visitor>>& visitors, std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets, const std::vector<std::shared_ptr<Ticket<VipVisitor, VipExhibitionEvent>>>& vipTickets, Menu& menu, bool& gamePlayed, std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>> ratedTickets) {
     bool validInput = false;
  while (!validInput) {
     try {
