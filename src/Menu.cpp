@@ -510,7 +510,7 @@ void Menu::runAdmin(const Admin& admin, Menu& menu, std::vector<std::shared_ptr<
               const std::vector<std::shared_ptr<Employees>>& employees, std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule) {
     std::cout << "Logged in as Admin\n" << admin;
 
-    int choice = -1;
+    int choice;
     do {
         menu.showAdminMenu();
         choice = getValidatedChoice(0, 5);
@@ -530,7 +530,7 @@ void Menu::runVisitor(
     std::cout << "Logged in as Visitor\n";
     std::cout << "Welcome " << currentVisitor->getUsername() << "!\n";
 
-    int choice = -1;
+    int choice;
     do {
         menu.showVisitorMenu();
         choice = getValidatedChoice(0, 10);
@@ -540,92 +540,87 @@ void Menu::runVisitor(
 }
 
 void Menu::loginUser(const Admin& admin, std::vector<std::shared_ptr<Exhibition>>& exhibitions, const std::vector<std::shared_ptr<Employees>>& employees, std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule, std::vector<std::shared_ptr<Visitor>>& visitors, std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets, const std::vector<std::shared_ptr<Ticket<VipVisitor, VipExhibitionEvent>>>& vipTickets, Menu& menu, bool& gamePlayed, std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>> ratedTickets) {
-    bool validInput = false;
-    while (!validInput) {
-        try {
-            std::string response;
-            std::cout << "Are you an admin? (yes/no): ";
-            std::cin >> response;
 
-            if (!isValid(response))
-                throw std::invalid_argument("Invalid answer! Please enter 'yes' or 'no'.");
+   while (true) {
+        std::string response;
+        std::cout << "Are you an admin? (yes/no): ";
+        std::cin >> response;
 
-            if (response == "yes") {
-                std::string user, pass;
-                std::cout << "Enter username to login: ";
-                std::cin >> user;
-                std::cout << "Enter password to login: ";
-                std::cin >> pass;
+        if (!isValid(response)) {
+            std::cout << "Invalid answer! Please enter 'yes' or 'no'.\n\n";
+            continue;
+        }
 
-                if (admin.login(user, pass)) {
-                    validInput = true;
-                    runAdmin(admin, menu, exhibitions, employees, schedule);
-                } else {
-                    throw std::runtime_error("Admin login failed.");
-                }
-            } else {
-                std::cout << "Do you have an account? (yes/no): ";
-                std::cin >> response;
+        if (response == "yes") {
+            std::string user, pass;
+            std::cout << "Enter username to login: ";
+            std::cin >> user;
+            std::cout << "Enter password to login: ";
+            std::cin >> pass;
 
-                if (!isValid(response))
-                    throw std::invalid_argument("Invalid answer! Please enter 'yes' or 'no'.");
+            if (admin.login(user, pass)) {
+                runAdmin(admin, menu, exhibitions, employees, schedule);
+                break;
+            }
+            std::cout << "Admin login failed.\n\n";
+            continue;
 
-                std::shared_ptr<Visitor> currentVisitor = nullptr;
-                bool found = false;
+        }
 
-                if (response == "no") {
-                    auto newVisitor = std::make_shared<StandardVisitor>();
-                    std::cin >> *newVisitor;
-                    std::string newUsername = newVisitor->getUsername();
-                    bool usernameExists = false;
+        std::cout << "Do you have an account? (yes/no): ";
+        std::cin >> response;
 
-                for (const auto& v : visitors) {
-                    if (v->getUsername() == newUsername) {
-                        usernameExists = true;
-                        break;
-                    }
-                }
+        if (!isValid(response)) {
+            std::cout << "Invalid answer! Please enter 'yes' or 'no'.\n\n";
+            continue;
+        }
 
-                if (usernameExists) {
-                    throw std::invalid_argument("Username already exists.");
-                }
+        std::shared_ptr<Visitor> currentVisitor = nullptr;
 
+        if (response == "no") {
+            auto newVisitor = std::make_shared<StandardVisitor>();
+            std::cin >> *newVisitor;
 
-                    visitors.push_back(newVisitor);
-                    currentVisitor = newVisitor;
-                    found = true;
-                    std::cout << "Account created successfully!\n";
-                }
+            std::string newUsername = newVisitor->getUsername();
+            bool usernameExists = false;
 
-                if (!found) {
-                    std::string user, pass;
-                    std::cout << "Enter username to login: ";
-                    std::cin >> user;
-                    std::cout << "Enter password to login: ";
-                    std::cin >> pass;
-
-                    for (const auto& visitor : visitors) {
-                        if (visitor->login(user, pass)) {
-                            currentVisitor = visitor;
-                            found = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (!found)
-                    throw std::runtime_error("Visitor login failed.");
-
-                if (currentVisitor) {
-                    validInput = true;
-                    runVisitor(currentVisitor, menu, visitors, exhibitions, tickets, ratedTickets, vipTickets, gamePlayed);
+            for (const auto& v : visitors) {
+                if (v->getUsername() == newUsername) {
+                    usernameExists = true;
+                    break;
                 }
             }
 
-        } catch (const std::exception& e) {
-            std::cout << "\nError: " << e.what() << "\n";
-            std::cout << "Restarting login process\n\n";
+            if (usernameExists) {
+                std::cout << "Username already exists.\n\n";
+                continue;
+            }
+
+            visitors.push_back(newVisitor);
+            currentVisitor = newVisitor;
+            std::cout << "Account created successfully!\n";
+        } else {
+            std::string user, pass;
+            std::cout << "Enter username to login: ";
+            std::cin >> user;
+            std::cout << "Enter password to login: ";
+            std::cin >> pass;
+
+            for (const auto& visitor : visitors) {
+                if (visitor->login(user, pass)) {
+                    currentVisitor = visitor;
+                    break;
+                }
+            }
+
+            if (!currentVisitor) {
+                std::cout << "Visitor login failed.\n\n";
+                continue;
+            }
         }
+
+        runVisitor(currentVisitor, menu, visitors, exhibitions, tickets, ratedTickets, vipTickets, gamePlayed);
+        break;
     }
 }
 
