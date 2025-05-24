@@ -9,6 +9,7 @@
 #include "../include/Cashier.h"
 #include "../include/StandardVisitor.h"
 #include "../include/VipVisitor.h"
+#include "../include/ExhibitionException.h"
 #include <memory>
 
 #include "Admin.h"
@@ -282,75 +283,83 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                 }
                 break;
             }
-            case 3: {
-                std::cout << "--- Available Exhibitions ---\n";
-                auto vipVisitor = std::dynamic_pointer_cast<VipVisitor>(currentVisitor);
-                std::vector<std::shared_ptr<Exhibition>> freeExhibitions;
-                for (size_t i = 0; i < exhibitions.size(); i++) {
-                    if (!exhibitions[i]->isFull()) {
-                        freeExhibitions.push_back(exhibitions[i]);
-                    }
-                }
-                int exhNr = 0;
-                for (size_t i = 0; i < freeExhibitions.size(); i++) {
-                    auto vipExhibition = std::dynamic_pointer_cast<VipExhibitionEvent>(freeExhibitions[i]);
-                    if (!vipExhibition) {
-                        std::cout << i+1 << ". " << *freeExhibitions[i] << "\n";
-                        exhNr++;
-                    }
-                    else if(vipVisitor) {
-                        std::cout << i+1 << ". ";
-                        vipExhibition ->printForYou(std::cout, vipVisitor -> getVipLevel());
-                        exhNr++;
-                    }
-                }
 
-                int exhChoice;
-
-
-                std::string response;
-                std::cout << "Select exhibition (enter number): ";
-                std::cin >> exhChoice;
-                if (exhChoice > exhNr || exhChoice <= 0) {
-                    std::cout << "Invalid exhibition choice";
-                    break;
-                }
-                double price = freeExhibitions[exhChoice-1]->getTicketPrice() * (1 - currentVisitor->getDiscount(false));
-                std::cout<< "The price for one ticket for this exhibitions will be: " << price <<"\n";
-                std::cout << "Do you want to make a reservation? (yes/no): ";
-                std::cin >> response;
-                if (response == "yes") {
-                    if (exhChoice <= static_cast<int>(freeExhibitions.size())) {
-                        auto selectedExhibition = freeExhibitions[exhChoice - 1];
-                        if (!selectedExhibition->isFull()) {
-                            int nrTickets;
-                            std::cout << "How many tickets do you want: ";
-                            std::cin >> nrTickets;
-                            bool firstTime = currentVisitor -> getIsFirstTimeVisitor();
-                            if (nrTickets + selectedExhibition-> getCurrentVisitors() <= selectedExhibition->getMaxVisitors()) {
-                                if (firstTime) {
-                                    std::cout << "You are a first time visitor, a discount of 10% will be added\n";
-                                }
-                                if (nrTickets >= 7) {
-                                    std::cout << "You have group discount! \n";
-                                }
-                                selectedExhibition->incrementVisitors(nrTickets);
-                                Utils::handleReservation(tickets, currentVisitor, selectedExhibition, nrTickets, visitors);
-                            }
-                            else {
-                                int ticketsAvailable = selectedExhibition->getMaxVisitors() - selectedExhibition-> getCurrentVisitors();
-                                std::cout << "There are only "<< ticketsAvailable << " tickets available\n";
-                            }
-
-                        } else {
-                            std::cout << "This exhibition is full!\n";
+           case 3: {
+                try {
+                    std::cout << "--- Available Exhibitions ---\n";
+                    auto vipVisitor = std::dynamic_pointer_cast<VipVisitor>(currentVisitor);
+                    std::vector<std::shared_ptr<Exhibition>> freeExhibitions;
+                    for (const auto& exh : exhibitions) {
+                        if (!exh->isFull()) {
+                            freeExhibitions.push_back(exh);
                         }
-                    } else {
-                        std::cout << "Invalid exhibition choice.\n";
+                    }
+
+                    if (freeExhibitions.empty()) {
+                        throw ExhibitionException("No exhibitions available at the moment.");
+                    }
+
+                    int exhNr = 0;
+                    for (size_t i = 0; i < freeExhibitions.size(); ++i) {
+                        auto vipExhibition = std::dynamic_pointer_cast<VipExhibitionEvent>(freeExhibitions[i]);
+                        if (!vipExhibition) {
+                            std::cout << i + 1 << ". " << *freeExhibitions[i] << "\n";
+                            exhNr++;
+                        } else if (vipVisitor) {
+                            std::cout << i + 1 << ". ";
+                            vipExhibition->printForYou(std::cout, vipVisitor->getVipLevel());
+                            exhNr++;
+                        }
+                    }
+
+                    int exhChoice;
+                    std::cout << "Select exhibition (enter number): ";
+                    std::cin >> exhChoice;
+                    if (exhChoice > exhNr || exhChoice <= 0) {
+                        throw InvalidChoiceException();
+                    }
+
+                    auto selectedExhibition = freeExhibitions[exhChoice - 1];
+                    double price = selectedExhibition->getTicketPrice() * (1 - currentVisitor->getDiscount(false));
+                    std::cout << "The price for one ticket for this exhibition will be: " << price << "\n";
+
+                    std::string response;
+                    std::cout << "Do you want to make a reservation? (yes/no): ";
+                    std::cin >> response;
+
+                    if (response == "yes") {
+                        if (selectedExhibition->isFull()) {
+                            throw ExhibitionFullException();
+                        }
+
+                        int nrTickets;
+                        std::cout << "How many tickets do you want: ";
+                        std::cin >> nrTickets;
+
+                        int available = selectedExhibition->getMaxVisitors() - selectedExhibition->getCurrentVisitors();
+                        if (nrTickets > available) {
+                            throw NotEnoughTicketsException(available);
+                        }
+
+                        if (currentVisitor->getIsFirstTimeVisitor()) {
+                            std::cout << "You are a first-time visitor, a discount of 10% will be added\n";
+                        }
+                        if (nrTickets >= 7) {
+                            std::cout << "You have group discount!\n";
+                        }
+
+                        selectedExhibition->incrementVisitors(nrTickets);
+                        Utils::handleReservation(tickets, currentVisitor, selectedExhibition, nrTickets, visitors);
                     }
                 }
+
+                catch (const ExhibitionException& ex) {
+                    std::cout << "Error: " << ex.what() << "\n";
+                }
+
                 break;
             }
+
             case 4: {
                 if (!tickets.empty()) {
                     int reservationIndex;
