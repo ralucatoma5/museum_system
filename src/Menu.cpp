@@ -354,7 +354,11 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                 }
 
                 catch (const ExhibitionException& ex) {
-                    std::cout << ex.what() << "\n";
+                    if (dynamic_cast<const NotEnoughTicketsException*>(&ex)) {
+                        std::cout << "You need to buy less tickets\n";
+                    } else {
+                        std::cout << "Error: " << ex.what() << "\n";
+                    }
                 }
 
                 break;
