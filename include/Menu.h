@@ -59,6 +59,7 @@ public:
         Exhibition>>>& tickets,
         const std::vector<std::shared_ptr<Ticket<VipVisitor,
         VipExhibitionEvent>>>& vipTickets,
+        Menu& menu,
         bool& gamePlayed,
         const std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& ratedTickets);
 
