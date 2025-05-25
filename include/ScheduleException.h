@@ -1,34 +1,32 @@
-//// ScheduleException.h
-//#ifndef SCHEDULEEXCEPTION_H
-//#define SCHEDULEEXCEPTION_H
-//
-//#include <exception>
-//#include <string>
-//
-//class ScheduleException : public std::exception {
-//    std::string msg;
-//public:
-//    explicit ScheduleException(const std::string& message = "Schedule error")
-//        : msg(message) {}
-//
-//    const char* what() const noexcept override {
-//        return msg.c_str();
-//    }
-//};
-//
-//class InvalidDayException : public ScheduleException {
-//public:
-//    InvalidDayException() : ScheduleException("Invalid day name.") {}
-//};
-//
-//class InvalidYesNoResponseException : public ScheduleException {
-//public:
-//    InvalidYesNoResponseException() : ScheduleException("Expected 'yes' or 'no' response.") {}
-//};
-//
-//class DayNotFoundException : public ScheduleException {
-//public:
-//    DayNotFoundException() : ScheduleException("The specified day was not found in the schedule.") {}
-//};
-//
-//#endif // SCHEDULEEXCEPTION_H
+// ExhibitionException.h
+#ifndef EXHIBITIONEXCEPTION_H
+#define EXHIBITIONEXCEPTION_H
+
+#include <exception>
+#include <string>
+
+class ExhibitionException : public std::exception {
+    std::string message;
+public:
+    explicit ExhibitionException(const std::string& msg = "Exhibition error") : message(msg) {}
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+class InvalidInputException : public ExhibitionException {
+public:
+    InvalidInputException() : ExhibitionException("Invalid input. Expected 'yes' or 'no'.") {}
+};
+
+class LoginFailedException : public ExhibitionException {
+public:
+    LoginFailedException() : ExhibitionException("Login failed. Invalid credentials.") {}
+};
+
+class UsernameExistsException : public ExhibitionException {
+public:
+    UsernameExistsException() : ExhibitionException("Username already exists.") {}
+};
+
+#endif // EXHIBITIONEXCEPTION_H
