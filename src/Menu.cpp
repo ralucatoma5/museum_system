@@ -360,12 +360,6 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                         std::cout << "Error: " << ex.what() << "\n";
                     }
                 }
-                catch (const std::exception& ex) {
-                    std::cout << "Debug: Caught standard exception: " << ex.what() << "\n";
-                }
-                catch (...) {
-                    std::cout << "Debug: Caught unknown exception\n";
-                }
 
                 break;
             }
