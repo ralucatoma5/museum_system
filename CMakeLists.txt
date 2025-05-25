@@ -137,7 +137,7 @@ add_executable(${MAIN_EXECUTABLE_NAME} main.cpp ${SOURCES}
         include/Employees.h
         include/example.h
         include/Exhibition.h
-        include/ExhibitionException.h
+        include/ScheduleException.h
         include/ExhibitionFactory.h
         include/HistoryExhibition.h
         include/Manager.h

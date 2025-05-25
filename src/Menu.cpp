@@ -9,7 +9,7 @@
 #include "../include/Cashier.h"
 #include "../include/StandardVisitor.h"
 #include "../include/VipVisitor.h"
-#include "../include/ExhibitionException.h"
+#include "../include/ScheduleException.h"
 #include <memory>
 
 #include "Admin.h"
@@ -143,135 +143,135 @@ void Menu::showVisitorMenu() {
 }
 
 void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition>>& exhibitions, const std::vector<std::shared_ptr<Employees>>& employees, std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule){
-        switch (choice) {
-            case 1: {
-                std::cout << "--- Exhibitions ---\n";
-                for (size_t i = 0; i < exhibitions.size(); i++) {
-                    std::cout << i+1 << ". " << *exhibitions[i] << "\n";
-                }
-                break;
+try {
+    switch (choice) {
+        case 1: {
+            std::cout << "--- Exhibitions ---\n";
+            for (size_t i = 0; i < exhibitions.size(); i++) {
+                std::cout << i+1 << ". " << *exhibitions[i] << "\n";
             }
-            case 2: {
-                std::string section;
-                std::cout << "Exhibition section (Art/ History/ Science/ Vip): ";
-                std::cin >> section;
-                section = Utils::capitalizeWord(section);
-                std::shared_ptr<ExhibitionFactory> factory = nullptr;
-                if (section == "Art") {
-                    factory = std::make_shared<ArtExhibitionFactory>();
-                } else if (section == "Science") {
-                    factory = std::make_shared<ScienceExhibitionFactory>();
-                } else if (section == "History") {
-                    factory = std::make_shared<HistoryExhibitionFactory>();
-                } else if (section == "Vip") {
-                    factory = std::make_shared<VipExhibitionFactory>();
-                } else {
-                    std::cout << "Please enter a valid section\n";
+            break;
+        }
+        case 2: {
+            std::string section;
+            std::cout << "Exhibition section (Art/ History/ Science/ Vip): ";
+            std::cin >> section;
+            section = Utils::capitalizeWord(section);
+            std::shared_ptr<ExhibitionFactory> factory = nullptr;
+            if (section == "Art") {
+                factory = std::make_shared<ArtExhibitionFactory>();
+            } else if (section == "Science") {
+                factory = std::make_shared<ScienceExhibitionFactory>();
+            } else if (section == "History") {
+                factory = std::make_shared<HistoryExhibitionFactory>();
+            } else if (section == "Vip") {
+                factory = std::make_shared<VipExhibitionFactory>();
+            } else {
+                std::cout << "Please enter a valid section\n";
+            }
+
+            if (factory) {
+                auto exhibition = factory -> createExhibition();
+                exhibitions.push_back(exhibition);
+                std::cout << "Exhibition added successfully!\n";
+            }
+            break;
+        }
+        case 3: {
+            std::cout << "--- Exhibitions ---\n";
+            for (size_t i = 0; i < exhibitions.size(); i++) {
+                std::cout << i+1 << ". " << *exhibitions[i] << "\n";
+            }
+            int exhNr;
+            std::cout << "Enter the index of the exhibition you want to delete: ";
+            std::cin >> exhNr;
+            exhNr--;
+            if (exhNr >= 0 && static_cast<std::vector<Exhibition>::size_type>(exhNr) < exhibitions.size()) {
+                exhibitions.erase(exhibitions.begin() + exhNr);
+                std::cout << "Exhibition at index " << exhNr + 1 << " deleted successfully.\n";
+            } else {
+                std::cout << "Invalid index. No exhibition deleted.\n";
+            }
+            break;
+        }
+        case 4: {
+
+                std::string day;
+                std::cout << "Enter day to schedule: ";
+                std::cin >> day;
+
+                std::vector<std::string> validDays = {
+                    "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+                };
+                if (std::find(validDays.begin(), validDays.end(), day) == validDays.end()) {
+                    throw InvalidDayException();
                 }
 
-                if (factory) {
-                    auto exhibition = factory -> createExhibition();
-                    exhibitions.push_back(exhibition);
-                    std::cout << "Exhibition added successfully!\n";
-                }
-                break;
-            }
-            case 3: {
-                std::cout << "--- Exhibitions ---\n";
-                for (size_t i = 0; i < exhibitions.size(); i++) {
-                    std::cout << i+1 << ". " << *exhibitions[i] << "\n";
-                }
-                int exhNr;
-                std::cout << "Enter the index of the exhibition you want to delete: ";
-                std::cin >> exhNr;
-                exhNr--;
-                if (exhNr >= 0 && static_cast<std::vector<Exhibition>::size_type>(exhNr) < exhibitions.size()) {
-                    exhibitions.erase(exhibitions.begin() + exhNr);
-                    std::cout << "Exhibition at index " << exhNr + 1 << " deleted successfully.\n";
-                } else {
-                    std::cout << "Invalid index. No exhibition deleted.\n";
-                }
-                break;
-            }
-            case 4: {
-                try {
-                    std::string day;
-                    std::cout << "Enter day to schedule: ";
-                    std::cin >> day;
+                if (!schedule.empty()) {
+                    std::cout << "Copy schedule from another day? (yes/no): ";
+                    std::string response;
+                    std::cin >> response;
 
-                    std::vector<std::string> validDays = {
-                        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
-                    };
-                    if (std::find(validDays.begin(), validDays.end(), day) == validDays.end()) {
-                        throw InvalidDayException();
+                    if (response != "yes" && response != "no") {
+                        throw InvalidYesNoResponseException();
                     }
 
-                    if (!schedule.empty()) {
-                        std::cout << "Copy schedule from another day? (yes/no): ";
-                        std::string response;
-                        std::cin >> response;
+                    if (response == "yes") {
+                        std::cout << "Scheduled days:\n";
+                        for (const auto& s : schedule)
+                            std::cout << "- " << s.first << "\n";
 
-                        if (response != "yes" && response != "no") {
-                            throw InvalidYesNoResponseException();
+                        std::string copyDay;
+                        std::cout << "Enter day to copy from: ";
+                        std::cin >> copyDay;
+
+                        if (schedule.find(copyDay) == schedule.end()) {
+                            throw DayNotFoundException();
                         }
 
-                        if (response == "yes") {
-                            std::cout << "Scheduled days:\n";
-                            for (const auto& s : schedule)
-                                std::cout << "- " << s.first << "\n";
-
-                            std::string copyDay;
-                            std::cout << "Enter day to copy from: ";
-                            std::cin >> copyDay;
-
-                            if (schedule.find(copyDay) == schedule.end()) {
-                                throw DayNotFoundException();
-                            }
-
-                            std::vector<std::shared_ptr<Employees>> clonedSchedule;
-                            for (const auto& emp : schedule[copyDay]) {
-                                clonedSchedule.push_back(emp->clone());
-                            }
-
-                            schedule[day] = clonedSchedule;
-                            std::cout << "Copied schedule from " << copyDay << " to " << day << "\n";
-                        } else {
-                            Utils::scheduleAllEmployees(employees, schedule, day);
+                        std::vector<std::shared_ptr<Employees>> clonedSchedule;
+                        for (const auto& emp : schedule[copyDay]) {
+                            clonedSchedule.push_back(emp->clone());
                         }
+
+                        schedule[day] = clonedSchedule;
+                        std::cout << "Copied schedule from " << copyDay << " to " << day << "\n";
                     } else {
                         Utils::scheduleAllEmployees(employees, schedule, day);
                     }
+                } else {
+                    Utils::scheduleAllEmployees(employees, schedule, day);
                 }
 
-                catch (const ScheduleException& e) {
-                    std::cerr << "Schedule error: " << e.what() << "\n";
-                }
 
-                break;
-            }
-
-            case 5: {
-                if (schedule.empty())
-                    std::cout << "There are no scheduled days\n";
-                else {
-                    std::cout << "Scheduled days:\n";
-                    for (const auto& [day, dayEmployees] : schedule) {
-                        std::cout << "\n---Schedule for " << day << "---\n";
-                        for (const auto& emp :dayEmployees) {
-                            std::cout << *emp << "\n";
-                        }
-                        std::cout << "\n";
-                    }
-                }
-                break;
-            }
-            case 0:
-                std::cout << "Goodbye!\n";
-                break;
-
-            default:
-                std::cout << "Invalid option. Try again.\n";
+            break;
         }
+
+        case 5: {
+            if (schedule.empty())
+                std::cout << "There are no scheduled days\n";
+            else {
+                std::cout << "Scheduled days:\n";
+                for (const auto& [day, dayEmployees] : schedule) {
+                    std::cout << "\n---Schedule for " << day << "---\n";
+                    for (const auto& emp :dayEmployees) {
+                        std::cout << *emp << "\n";
+                    }
+                    std::cout << "\n";
+                }
+            }
+            break;
+        }
+        case 0:
+            std::cout << "Goodbye!\n";
+        break;
+
+        default:
+            std::cout << "Invalid option. Try again.\n";
+    }
+    }catch (const ScheduleException& e) {
+        std::cerr << "Schedule error: " << e.what() << "\n";
+    }
     }
 
     void Menu::handleVisitorChoice(int choice, std::vector<std::shared_ptr<Exhibition>>& exhibitions,  std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& ratedTickets, bool& gamePlayed, std::shared_ptr<Visitor>& currentVisitor, std::vector<std::shared_ptr<Visitor>>& visitors, std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets, const std::vector<std::shared_ptr<Ticket<VipVisitor, VipExhibitionEvent>>>& vipTickets){
