@@ -1,5 +1,5 @@
 #include "../include/ScienceExhibition.h"
-#include<iostream>
+#include <iostream>
 
 ScienceExhibition::ScienceExhibition()
     : Exhibition("unknown", 0), fieldOfScience("unknown"), hasLiveDemos(false) {}

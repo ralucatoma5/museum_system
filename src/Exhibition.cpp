@@ -7,15 +7,16 @@ int Exhibition::allTicketsSold = 0;
 Exhibition::Exhibition(const std::string& name, int maxVisitors)
     : name(name), maxVisitors(maxVisitors), currentVisitors(0) {}
 
-void Exhibition::incrementVisitors( int nrTickets) {
+void Exhibition::incrementVisitors(int nrTickets) {
     if (currentVisitors + nrTickets <= maxVisitors) {
         currentVisitors += nrTickets;
         allTicketsSold += nrTickets;
-    } else if (currentVisitors == maxVisitors) {
-        std::cout << "Exhibition is full!\n";
-    } else {
-        std::cout << "You can't buy that many tickets\n";
     }
+    // else if (currentVisitors == maxVisitors) {
+    //     std::cout << "Exhibition is full!\n";
+    // } else {
+    //     std::cout << "You can't buy that many tickets\n";
+    // }
 }
 
 void Exhibition::decrementVisitors(int nrTickets) {
@@ -32,9 +33,11 @@ void Exhibition::addRating(double rating) {
 }
 
 double Exhibition::getAverageRating() const {
-    if (ratings.empty()) return 0.0;
+    if (ratings.empty())
+        return 0.0;
     double sum = 0;
-    for (const auto& r : ratings) sum += r;
+    for (const auto& r : ratings)
+        sum += r;
     return sum / static_cast<double>(ratings.size());
 }
 

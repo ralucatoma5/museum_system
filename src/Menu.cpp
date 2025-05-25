@@ -295,29 +295,29 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                         }
                     }
 
-                    if (freeExhibitions.empty()) {
-                        throw ExhibitionException("No exhibitions available at the moment.");
-                    }
-
-                    int exhNr = 0;
-                    for (size_t i = 0; i < freeExhibitions.size(); ++i) {
-                        auto vipExhibition = std::dynamic_pointer_cast<VipExhibitionEvent>(freeExhibitions[i]);
-                        if (!vipExhibition) {
-                            std::cout << i + 1 << ". " << *freeExhibitions[i] << "\n";
-                            exhNr++;
-                        } else if (vipVisitor) {
-                            std::cout << i + 1 << ". ";
-                            vipExhibition->printForYou(std::cout, vipVisitor->getVipLevel());
-                            exhNr++;
-                        }
-                    }
+                    // if (freeExhibitions.empty()) {
+                    //     throw ExhibitionException("No exhibitions available at the moment.");
+                    // }
+                    //
+                    // int exhNr = 0;
+                    // for (size_t i = 0; i < freeExhibitions.size(); ++i) {
+                    //     auto vipExhibition = std::dynamic_pointer_cast<VipExhibitionEvent>(freeExhibitions[i]);
+                    //     if (!vipExhibition) {
+                    //         std::cout << i + 1 << ". " << *freeExhibitions[i] << "\n";
+                    //         exhNr++;
+                    //     } else if (vipVisitor) {
+                    //         std::cout << i + 1 << ". ";
+                    //         vipExhibition->printForYou(std::cout, vipVisitor->getVipLevel());
+                    //         exhNr++;
+                    //     }
+                    // }
 
                     int exhChoice;
                     std::cout << "Select exhibition (enter number): ";
                     std::cin >> exhChoice;
-                    if (exhChoice > exhNr || exhChoice <= 0) {
-                        throw InvalidChoiceException();
-                    }
+                    // if (exhChoice > exhNr || exhChoice <= 0) {
+                    //     throw InvalidChoiceException();
+                    // }
 
                     auto selectedExhibition = freeExhibitions[exhChoice - 1];
                     double price = selectedExhibition->getTicketPrice() * (1 - currentVisitor->getDiscount(false));
@@ -354,11 +354,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                 }
 
                 catch (const ExhibitionException& ex) {
-                    if (dynamic_cast<const NotEnoughTicketsException*>(&ex)) {
-                        std::cout << "You need to buy less tickets\n";
-                    } else {
-                        std::cout << "Error: " << ex.what() << "\n";
-                    }
+                    std::cout << ex.what() << "\n";
                 }
 
                 break;
