@@ -20,6 +20,7 @@
 #include "include/TourGuide.h"
 #include "include/Cashier.h"
 #include "include/Menu.h"
+#include "include/ScheduleException.h"
 
 
 int main() {
@@ -32,6 +33,37 @@ int main() {
     std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>> tickets;
     std::vector<std::shared_ptr<Ticket<VipVisitor, VipExhibitionEvent>>> vipTickets;
     menu.seedData(exhibitions, visitors, employees, vipTickets);
+    std::string city;
+    while (true) {
+        try {
+            std::cout << "Enter the city where you'd like to explore exhibitions (e.g., Bucharest, Cluj): ";
+            std::getline(std::cin, city);
+            if (city != "Bucharest" && city != "Cluj") {
+                throw InvalidCityException();
+            }
+            break;
+        }
+        catch (const ExhibitionException& e) {
+            std::cerr << "Error: " << e.what() << "\nPlease try again.\n";
+        }
+    }
+
+    std::string type;
+    while (true) {
+        try {
+            std::cout << "What type of exhibition are you interested in? (art/history/science/vip): ";
+            std::getline(std::cin, type);
+            if (type != "art" && type != "history" && type != "science" && type != "vip") {
+                throw InvalidExhibitionTypeException();
+            }
+            break;
+        }
+        catch (const ExhibitionException& e) {
+            std::cerr << "Error: " << e.what() << "\nPlease try again.\n";
+        }
+    }
+
+    std::cout << "Great! Let's continue to login.\n\n";
     bool exitApp = false;
     while (!exitApp) {
         bool gamePlayed = false;
