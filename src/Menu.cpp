@@ -542,7 +542,7 @@ void Menu::runVisitor(
     } while (choice != 0);
 }
 
-void Menu::loginUser(const Admin& admin, std::vector<std::shared_ptr<Exhibition>>& exhibitions, const std::vector<std::shared_ptr<Employees>>& employees, std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule, std::vector<std::shared_ptr<Visitor>>& visitors, std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets, const std::vector<std::shared_ptr<Ticket<VipVisitor, VipExhibitionEvent>>>& vipTickets, Menu& menu, bool& gamePlayed, const std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& ratedTickets) {
+void Menu::loginUser(const Admin& admin, std::vector<std::shared_ptr<Exhibition>>& exhibitions, const std::vector<std::shared_ptr<Employees>>& employees, std::map<std::string, std::vector<std::shared_ptr<Employees>>>& schedule, std::vector<std::shared_ptr<Visitor>>& visitors, std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& tickets, const std::vector<std::shared_ptr<Ticket<VipVisitor, VipExhibitionEvent>>>& vipTickets, bool& gamePlayed, const std::vector<std::shared_ptr<Ticket<Visitor, Exhibition>>>& ratedTickets) {
 
     std::string response;
     std::cout << "Are you an admin? (yes/no): ";
