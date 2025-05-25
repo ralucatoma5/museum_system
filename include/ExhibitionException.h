@@ -1,33 +1,34 @@
-#ifndef EXHIBITIONEXCEPTION_H
-#define EXHIBITIONEXCEPTION_H
+// ScheduleException.h
+#ifndef SCHEDULEEXCEPTION_H
+#define SCHEDULEEXCEPTION_H
 
 #include <exception>
 #include <string>
 
-class ExhibitionException : public std::exception {
-    std::string message;
+class ScheduleException : public std::exception {
+    std::string msg;
 public:
-    explicit ExhibitionException(const std::string& msg = "Exhibition error") : message(msg) {}
+    explicit ScheduleException(const std::string& message = "Schedule error")
+        : msg(message) {}
 
     const char* what() const noexcept override {
-        return message.c_str();
+        return msg.c_str();
     }
 };
 
-class InvalidChoiceException : public ExhibitionException {
+class InvalidDayException : public ScheduleException {
 public:
-    InvalidChoiceException() : ExhibitionException("Invalid exhibition choice.") {}
+    InvalidDayException() : ScheduleException("Invalid day name.") {}
 };
 
-class ExhibitionFullException : public ExhibitionException {
+class InvalidYesNoResponseException : public ScheduleException {
 public:
-    ExhibitionFullException() : ExhibitionException("This exhibition is full.") {}
+    InvalidYesNoResponseException() : ScheduleException("Expected 'yes' or 'no' response.") {}
 };
 
-class NotEnoughTicketsException : public ExhibitionException {
+class DayNotFoundException : public ScheduleException {
 public:
-    NotEnoughTicketsException(): ExhibitionException("Not enough tickets available.") {}
-
+    DayNotFoundException() : ScheduleException("The specified day was not found in the schedule.") {}
 };
 
-#endif // EXHIBITIONEXCEPTION_H
+#endif // SCHEDULEEXCEPTION_H
