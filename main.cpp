@@ -41,7 +41,6 @@ int main() {
             std::map<std::string, std::vector<std::shared_ptr<Employees>>> schedule;
 
             menu.loginUser(admin, exhibitions, employees, schedule, visitors, tickets, vipTickets, menu, gamePlayed, ratedTickets);
-
             std::string response;
             std::cout << "Do you want to login again or exit the program? (login/exit): ";
             std::cin >> response;
