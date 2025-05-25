@@ -9,6 +9,7 @@
 #include "../include/Cashier.h"
 #include "../include/StandardVisitor.h"
 #include "../include/VipVisitor.h"
+#include "../include/ScheduleException.h"
 
 #include <memory>
 
@@ -195,43 +196,62 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
             break;
         }
         case 4: {
-            std::string day;
-            std::cout << "Enter day to schedule: ";
-            std::cin >> day;
+            try {
+                std::string day;
+                std::cout << "Enter day to schedule: ";
+                std::cin >> day;
 
-            if (!schedule.empty()) {
-                std::cout << "Copy schedule from another day? (yes/no): ";
-                std::string response;
-                std::cin >> response;
-                if (response == "yes") {
-                    std::cout << "Scheduled days:\n";
-                    for (const auto& s : schedule)
-                        std::cout << "- " << s.first << "\n";
-                    std::string copyDay;
-                    std::cout << "Enter day to copy from: ";
-                    std::cin >> copyDay;
-                    if (schedule.find(copyDay) != schedule.end()) {
+                std::vector<std::string> validDays = {
+                    "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"
+                };
+                if (std::find(validDays.begin(), validDays.end(), day) == validDays.end()) {
+                    throw InvalidDayException();
+                }
+
+                if (!schedule.empty()) {
+                    std::cout << "Copy schedule from another day? (yes/no): ";
+                    std::string response;
+                    std::cin >> response;
+
+                    if (response != "yes" && response != "no") {
+                        throw InvalidYesNoResponseException();
+                    }
+
+                    if (response == "yes") {
+                        std::cout << "Scheduled days:\n";
+                        for (const auto& s : schedule)
+                            std::cout << "- " << s.first << "\n";
+
+                        std::string copyDay;
+                        std::cout << "Enter day to copy from: ";
+                        std::cin >> copyDay;
+
+                        if (schedule.find(copyDay) == schedule.end()) {
+                            throw DayNotFoundException();
+                        }
+
                         std::vector<std::shared_ptr<Employees>> clonedSchedule;
-
                         for (const auto& emp : schedule[copyDay]) {
                             clonedSchedule.push_back(emp->clone());
                         }
 
                         schedule[day] = clonedSchedule;
                         std::cout << "Copied schedule from " << copyDay << " to " << day << "\n";
-                    }
-                    else {
-                        std::cout << "No such day scheduled.\n";
+                    } else {
+                        Utils::scheduleAllEmployees(employees, schedule, day);
                     }
                 } else {
                     Utils::scheduleAllEmployees(employees, schedule, day);
                 }
-            } else {
-                Utils::scheduleAllEmployees(employees, schedule, day);
+            }
+
+            catch (const ScheduleException& e) {
+                std::cout << e.what() << "\n";
             }
 
             break;
         }
+
         case 5: {
             if (schedule.empty())
                 std::cout << "There are no scheduled days\n";
