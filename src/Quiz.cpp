@@ -10,9 +10,8 @@ bool Quiz::startQuiz() {
     std::cout << "       MUSEUM QUIZ GAME     \n";
     std::cout << "----------------------------\n";
     std::cout << "Test your knowledge of art, history, and science!\n";
-    std::cout << "Answer the questions correctly to earn loyalty points.\n";
-    std::cout << "Score 50 points or more to win 50 loyalty points!\n";
-    std::cout << "You can only play this game once, do you want to continue?(yes/no): ";
+    std::cout << "Answer 5 or more questions correctly to earn loyalty points.\n";
+    std::cout << "You can only play this game once, do you want to continue? (yes/no): ";
     std::cin >> response;
 
     if (response == "yes") {

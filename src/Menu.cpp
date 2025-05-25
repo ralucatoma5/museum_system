@@ -457,6 +457,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
             }
 
             case 9: {
+                std::cout << "--- Exhibitions Reviews ---\n";
                 Exhibition::sortExhibitionsByRating(exhibitions);
                 for (const auto& exhibition : exhibitions) {
                     std::cout << exhibition -> getName() << " " << exhibition -> getAverageRating() << "\n";
