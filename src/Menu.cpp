@@ -288,7 +288,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                         std::cout << i+1 << ". " << *exhibitions[i] << "\n";
                     else if(vipVisitor) {
                         std::cout << i+1 << ". ";
-                        vipExhibition ->printForYou(std::cout, vipVisitor -> getVipLevel());
+                        vipExhibition->printForYou(std::cout, vipVisitor -> getVipLevel());
                     }
                 }
                 break;
@@ -347,8 +347,8 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                             int nrTickets;
                             std::cout << "How many tickets do you want: ";
                             std::cin >> nrTickets;
-                            bool firstTime = currentVisitor -> getIsFirstTimeVisitor();
-                            if (nrTickets + selectedExhibition-> getCurrentVisitors() <= selectedExhibition->getMaxVisitors()) {
+                            bool firstTime = currentVisitor->getIsFirstTimeVisitor();
+                            if (nrTickets + selectedExhibition->getCurrentVisitors() <= selectedExhibition->getMaxVisitors()) {
                                 if (firstTime) {
                                     std::cout << "You are a first time visitor, a discount of 10% will be added\n";
                                 }
@@ -359,7 +359,7 @@ void  Menu::handleAdminChoice(int choice, std::vector<std::shared_ptr<Exhibition
                                 Utils::handleReservation(tickets, currentVisitor, selectedExhibition, nrTickets, visitors);
                             }
                             else {
-                                int ticketsAvailable = selectedExhibition->getMaxVisitors() - selectedExhibition-> getCurrentVisitors();
+                                int ticketsAvailable = selectedExhibition->getMaxVisitors() - selectedExhibition->getCurrentVisitors();
                                 std::cout << "There are only "<< ticketsAvailable << " tickets available\n";
                             }
 

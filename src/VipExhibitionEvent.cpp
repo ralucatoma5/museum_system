@@ -25,7 +25,6 @@ void VipExhibitionEvent::printAllPerksAndGifts(std::ostream& os) const {
     }
 }
 
-
 void VipExhibitionEvent::print(std::ostream& os) const {
     os << "VIP Exhibition Event: " << name << "\n";
     os << "Place: " << place << "\n";
