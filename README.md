@@ -13,11 +13,11 @@ Manage exhibitions and employees, create work schedules, and oversee operations.
 ## Key Features
 ### Visitor Panel
 1. View All Exhibitions
-Browse all exhibitions with details including visitor capacity, availability, and current average rating.
+Browse all exhibitions with details including visitor capacity and availability.
 
 
 2. View Ticket Price
-Check ticket prices based on the exhibition and visitor's current loyalty level (Standard or VIP).
+Check ticket prices based on the exhibition and visitor's current loyalty level (Standard or VIP) and type.
 
 
 3. Make a Reservation
@@ -51,7 +51,7 @@ Check ticket prices based on the exhibition and visitor's current loyalty level 
 
     - Current loyalty level (Standard / VIP)
 
-    - Total loyalty points (from quizzes)
+    - Total loyalty points 
 
 7. Take Quiz to Earn Loyalty Points
 
@@ -73,7 +73,7 @@ Check ticket prices based on the exhibition and visitor's current loyalty level 
 
     - View the average rating for each exhibition.
 
-    - Exhibitions can also be sorted by rating, with alphabetical tiebreakers.
+    - Exhibitions can also be sorted by rating.
 
 10. See VIP-Only Exhibitions and Perks
 
@@ -94,7 +94,7 @@ Check ticket prices based on the exhibition and visitor's current loyalty level 
 
 ## Admin Panel
 1. View All Exhibitions
-    - See all exhibitions, their status (full or not), and ticket sales data.
+    - See all exhibitions.
 2. Add Exhibition
      - Create new exhibitions with visitor capacity, type, and ticket price.
 
